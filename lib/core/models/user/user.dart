@@ -17,35 +17,32 @@ abstract class User implements Built<User, UserBuilder> {
 
   String get email;
 
-  @nullable
-  String get name;
+  String? get name;
 
-  @nullable
-  String get phone;
+  String? get phone;
 
-  @nullable
-  String get website;
+  String? get website;
 
   String toJson() {
     return json.encode(serializers.serializeWith(User.serializer, this));
   }
 
   Map<String, dynamic> toMap() {
-    return serializers.serializeWith(User.serializer, this);
+    return serializers.serializeWith(User.serializer, this) as Map<String, dynamic>;
   }
 
   factory User.fromJson(String jsonString) {
     return serializers.deserializeWith(
       User.serializer,
       json.decode(jsonString),
-    );
+    )!;
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return serializers.deserializeWith(
       User.serializer,
       map,
-    );
+    )!;
   }
 
   User._();

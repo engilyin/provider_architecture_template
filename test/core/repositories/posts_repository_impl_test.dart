@@ -19,10 +19,10 @@ class MockPostsRemoteDataSource extends Mock implements PostsRemoteDataSource {}
 class MockConnectivityService extends Mock implements ConnectivityService {}
 
 void main() {
-  PostsRepository repository;
-  PostsRemoteDataSource postsRemoteDataSource;
-  PostsLocalDataSource postsLocalDataSource;
-  ConnectivityService connectivityService;
+  late PostsRepository repository;
+  late PostsRemoteDataSource postsRemoteDataSource;
+  late PostsLocalDataSource postsLocalDataSource;
+  late ConnectivityService connectivityService;
 
   setUp(() {
     locator.allowReassignment = true;

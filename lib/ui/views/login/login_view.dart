@@ -1,13 +1,16 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider_start/core/localization/localization.dart';
+import 'package:provider_start/core/mixins/validators.dart';
 import 'package:provider_start/ui/shared/ui_helper.dart';
 import 'package:provider_start/ui/views/login/login_view_model.dart';
 import 'package:provider_start/ui/widgets/cupertino/cupertino_text_form_field.dart';
 import 'package:provider_start/ui/widgets/stateless/loading_animation.dart';
 import 'package:stacked/stacked.dart';
 
+@RoutePage()
 class LoginView extends StatefulWidget {
   @override
   _LoginViewState createState() => _LoginViewState();
@@ -16,17 +19,9 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController emailController;
-  TextEditingController passwordController;
-  FocusNode passwordFocusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    passwordFocusNode = FocusNode();
-  }
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  FocusNode passwordFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -38,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(),
@@ -69,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
                         onFieldSubmitted: (_) =>
                             passwordFocusNode.requestFocus(),
                         validator: (_) => local.translate(
-                          model.validateEmail(emailController.text),
+                          Validators.validateEmail(emailController.text),
                         ),
                       ),
                       UIHelper.verticalSpaceMedium(),
@@ -77,27 +72,27 @@ class _LoginViewState extends State<LoginView> {
                         controller: passwordController,
                         focusNode: passwordFocusNode,
                         onFieldSubmitted: (_) {
-                          if (!formKey.currentState.validate()) return;
+                          if (!formKey.currentState!.validate()) return;
 
                           model.login(
                             emailController.text,
                             passwordController.text,
                           );
                         },
-                        validator: (_) => local.translate(
-                          model.validatePassword(passwordController.text),
+                        validator: (_) => local!.translate(
+                          Validators.validatePassword(passwordController.text),
                         ),
                       ),
                       UIHelper.verticalSpaceMedium(),
                       _SignInButton(
                         busy: model.isBusy,
                         onPressed: () {
-                          if (!formKey.currentState.validate()) return;
-
-                          model.login(
-                            emailController.text,
-                            passwordController.text,
-                          );
+                          //if (formKey.currentState!.validate()) {
+                            model.login(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                          //}
                         },
                       ),
                     ],
@@ -114,47 +109,43 @@ class _LoginViewState extends State<LoginView> {
 
 class _SignInButton extends StatelessWidget {
   final bool busy;
-  final Function onPressed;
+  final void Function() onPressed;
 
   const _SignInButton({
-    Key key,
-    this.busy,
-    this.onPressed,
+    Key? key,
+    required this.busy,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return busy
         ? LoadingAnimation()
-        : PlatformButton(
-            child: Text(local.loginButton),
+        : ElevatedButton(
+            child: Text(local!.loginButton),
             onPressed: onPressed,
-            material: (_, __) => MaterialRaisedButtonData(
-              textTheme: ButtonTextTheme.primary,
-              color: theme.primaryColor,
-            ),
           );
   }
 }
 
 class _EmailTextField extends StatelessWidget {
   final TextEditingController controller;
-  final Function onFieldSubmitted;
-  final Function validator;
+  final void Function(String) onFieldSubmitted;
+  final String? Function(String?) validator;
 
   const _EmailTextField({
-    Key key,
-    this.controller,
-    this.onFieldSubmitted,
-    this.validator,
+    Key? key,
+    required this.controller,
+    required this.onFieldSubmitted,
+    required this.validator,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return PlatformWidget(
       material: (_, __) => TextFormField(
@@ -165,7 +156,7 @@ class _EmailTextField extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.email),
-          hintText: local.emailHint,
+          hintText: local!.emailHint,
           contentPadding: const EdgeInsets.all(8),
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(
@@ -178,7 +169,7 @@ class _EmailTextField extends StatelessWidget {
         controller: controller,
         validator: validator,
         onFieldSubmitted: onFieldSubmitted,
-        placeholder: local.emailHint,
+        placeholder: local!.emailHint,
         textInputAction: TextInputAction.next,
         keyboardType: TextInputType.emailAddress,
         prefix: Padding(
@@ -197,20 +188,20 @@ class _EmailTextField extends StatelessWidget {
 class _PasswordTextField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
-  final Function onFieldSubmitted;
-  final Function validator;
+  final void Function(String) onFieldSubmitted;
+  final String? Function(String?) validator;
 
   const _PasswordTextField({
-    Key key,
-    this.controller,
-    this.focusNode,
-    this.onFieldSubmitted,
-    this.validator,
+    Key? key,
+    required this.controller,
+    required this.focusNode,
+    required this.onFieldSubmitted,
+    required this.validator,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return PlatformWidget(
       material: (_, __) => TextFormField(
@@ -221,7 +212,7 @@ class _PasswordTextField extends StatelessWidget {
         textInputAction: TextInputAction.send,
         onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
-          hintText: local.passwordHint,
+          hintText: local!.passwordHint,
           prefixIcon: Icon(Icons.lock),
           contentPadding: const EdgeInsets.all(8),
           border: OutlineInputBorder(
@@ -235,7 +226,7 @@ class _PasswordTextField extends StatelessWidget {
         validator: validator,
         controller: controller,
         focusNode: focusNode,
-        placeholder: local.passwordHint,
+        placeholder: local!.passwordHint,
         obscureText: true,
         onFieldSubmitted: onFieldSubmitted,
         textInputAction: TextInputAction.send,

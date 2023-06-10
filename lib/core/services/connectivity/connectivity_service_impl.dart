@@ -11,8 +11,8 @@ class ConnectivityServiceImpl implements ConnectivityService {
   final _connectivityResultController = StreamController<ConnectivityStatus>();
   final _connectivity = Connectivity();
 
-  StreamSubscription<ConnectivityResult> _subscription;
-  ConnectivityResult _lastResult;
+  late StreamSubscription<ConnectivityResult> _subscription;
+  ConnectivityResult? _lastResult;
   bool _serviceStopped = false;
 
   @override

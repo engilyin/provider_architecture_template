@@ -20,5 +20,6 @@ List<SingleChildWidget> dependentServices = [];
 List<SingleChildWidget> uiConsumableProviders = [
   StreamProvider<ConnectivityStatus>(
     create: (context) => locator<ConnectivityService>().connectivity$,
+    initialData: ConnectivityStatus.Offline,
   ),
 ];

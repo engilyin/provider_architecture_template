@@ -7,14 +7,14 @@ class ConfirmDialog extends StatelessWidget {
   final VoidCallback onConfirmed;
   final String title;
   final String description;
-  final String buttonTitle;
+  final String? buttonTitle;
 
   const ConfirmDialog({
-    Key key,
-    @required this.title,
-    @required this.description,
-    @required this.onDenied,
-    @required this.onConfirmed,
+    Key? key,
+    required this.title,
+    required this.description,
+    required this.onDenied,
+    required this.onConfirmed,
     this.buttonTitle,
   })  : assert(title != null),
         assert(description != null),
@@ -22,7 +22,7 @@ class ConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return WillPopScope(
       onWillPop: () async {

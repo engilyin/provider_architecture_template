@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider_start/core/constant/local_keys.dart';
 import 'package:provider_start/core/models/alert_request/confirm_alert_request.dart';
@@ -9,31 +10,28 @@ import 'package:provider_start/core/services/app_settings/app_settings_service.d
 import 'package:provider_start/core/services/auth/auth_service.dart';
 import 'package:provider_start/core/services/dialog/dialog_service.dart';
 import 'package:provider_start/core/services/key_storage/key_storage_service.dart';
-import 'package:provider_start/core/services/navigation/navigation_service.dart';
 import 'package:provider_start/core/services/snackbar/snack_bar_service.dart';
 import 'package:provider_start/locator.dart';
 import 'package:provider_start/ui/views/settings/settings_view_model.dart';
 
-class MockKeyStorageService extends Mock implements KeyStorageService {}
 
-class MockKeyAppSettingsService extends Mock implements AppSettingsService {}
+@GenerateNiceMocks([MockSpec<KeyStorageService>(),
+  MockSpec<AppSettingsService>(),
+  MockSpec<SnackBarService>(),
+  MockSpec<DialogService>(),
+  MockSpec<AuthService>(),
+  MockSpec<ConfirmAlertRequest>(),
+])
+import 'settings_view_model_test.mocks.dart';
 
-class MockSnackBarService extends Mock implements SnackBarService {}
-
-class MockDialogService extends Mock implements DialogService {}
-
-class MockNavigationService extends Mock implements NavigationService {}
-
-class MockAuthService extends Mock implements AuthService {}
 
 void main() {
-  SettingsViewModel settingsViewModel;
-  KeyStorageService mockKeyStorageService;
-  AppSettingsService mockKeyAppSettingsService;
-  SnackBarService mockSnackBarService;
-  DialogService mockDialogService;
-  NavigationService mockNavigationService;
-  AuthService mockAuthService;
+  late SettingsViewModel settingsViewModel;
+  late KeyStorageService mockKeyStorageService;
+  late AppSettingsService mockKeyAppSettingsService;
+  late SnackBarService mockSnackBarService;
+  late DialogService mockDialogService;
+  late AuthService mockAuthService;
 
   ConfirmAlertRequest alertRequest;
   ConfirmAlertResponse alertResponse;
@@ -42,17 +40,15 @@ void main() {
     locator.allowReassignment = true;
 
     mockKeyStorageService = MockKeyStorageService();
-    mockKeyAppSettingsService = MockKeyAppSettingsService();
+    mockKeyAppSettingsService = MockAppSettingsService();
     mockSnackBarService = MockSnackBarService();
     mockDialogService = MockDialogService();
-    mockNavigationService = MockNavigationService();
     mockAuthService = MockAuthService();
 
     locator.registerSingleton<KeyStorageService>(mockKeyStorageService);
     locator.registerSingleton<AppSettingsService>(mockKeyAppSettingsService);
     locator.registerSingleton<SnackBarService>(mockSnackBarService);
     locator.registerSingleton<DialogService>(mockDialogService);
-    locator.registerSingleton<NavigationService>(mockNavigationService);
     locator.registerSingleton<AuthService>(mockAuthService);
 
     settingsViewModel = SettingsViewModel();
@@ -142,9 +138,9 @@ void main() {
   group('toggleNotificationsEnabled()', () {
     test('when called notificationsEnabled is toggled', () async {
       expect(settingsViewModel.notificationsEnabled, false);
-      await settingsViewModel.toggleNotificationsEnabled();
+      settingsViewModel.toggleNotificationsEnabled();
       expect(settingsViewModel.notificationsEnabled, true);
-      await settingsViewModel.toggleNotificationsEnabled();
+      settingsViewModel.toggleNotificationsEnabled();
       expect(settingsViewModel.notificationsEnabled, false);
     });
 
@@ -154,7 +150,7 @@ void main() {
       settingsViewModel.addListener(() => updated = true);
 
       // act
-      await settingsViewModel.toggleNotificationsEnabled();
+      settingsViewModel.toggleNotificationsEnabled();
 
       // assert
       expect(updated, true);
@@ -193,7 +189,7 @@ void main() {
       await settingsViewModel.signOut();
 
       // assert
-      verify(mockDialogService.showDialog(alertRequest)).called(1);
+      verify(mockDialogService.showDialog(MockConfirmAlertRequest())).called(1);
     });
 
     test('when called and alert confirmed authService.signOut() is called',

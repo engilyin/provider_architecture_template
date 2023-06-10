@@ -20,8 +20,8 @@ class FadeInTranslate extends StatefulWidget {
   final Duration duration;
 
   const FadeInTranslate({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.direction = FadeInDirection.left,
     this.duration = const Duration(milliseconds: 500),
   })  : assert(child != null),
@@ -33,9 +33,9 @@ class FadeInTranslate extends StatefulWidget {
 
 class _FadeInTranslateState extends State<FadeInTranslate>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _opacityAnimation;
-  Animation<Offset> _translateAnimation;
+  late AnimationController _controller;
+  late Animation<double> _opacityAnimation;
+  late Animation<Offset> _translateAnimation;
 
   @override
   void initState() {

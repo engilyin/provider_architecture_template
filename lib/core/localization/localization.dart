@@ -8,11 +8,11 @@ import 'package:provider_start/local_setup.dart';
 
 class AppLocalizations {
   final Locale locale;
-  Map<String, String> _sentences;
+  Map<String, String> _sentences = {};
 
   AppLocalizations(this.locale);
 
-  static AppLocalizations of(BuildContext context) =>
+  static AppLocalizations? of(BuildContext context) =>
       Localizations.of<AppLocalizations>(context, AppLocalizations);
 
   Future<bool> load() async {
@@ -28,8 +28,8 @@ class AppLocalizations {
     return true;
   }
 
-  String translate(String key) {
-    return _sentences[key];
+  String translate(String? key) {
+    return _sentences[key] ?? '';
   }
 
   // List of available local strings that the app can use

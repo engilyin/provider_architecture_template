@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:hive/hive.dart';
 import 'package:provider_start/core/constant/local_storage_keys.dart';
@@ -10,17 +11,15 @@ import 'package:provider_start/locator.dart';
 
 import '../../../data/mocks.dart';
 
-class MockHive extends Mock implements HiveInterface {}
+@GenerateNiceMocks([MockSpec<HiveInterface>(), MockSpec<FileHelper>(), MockSpec<Box<UserH>>(as: #MockBox)])
+import 'users_local_data_source_test.mocks.dart';
 
-class MockFileHelper extends Mock implements FileHelper {}
-
-class MockBox<UserH> extends Mock implements Box<UserH> {}
 
 void main() {
-  UsersLocalDataSource usersLocalDataSource;
-  FileHelper fileHelper;
-  HiveInterface hive;
-  MockBox<UserH> usersBox;
+  late UsersLocalDataSource usersLocalDataSource;
+  late FileHelper fileHelper;
+  late HiveInterface hive;
+  late MockBox usersBox;
 
   final fakePath = 'users/';
 
@@ -30,13 +29,18 @@ void main() {
     locator.registerSingleton<FileHelper>(MockFileHelper());
     fileHelper = locator<FileHelper>();
 
-    locator.registerSingleton<HiveInterface>(MockHive());
+    locator.registerSingleton<HiveInterface>(MockHiveInterface());
     hive = locator<HiveInterface>();
 
     locator.registerSingleton<UsersLocalDataSource>(UsersLocalDataSourceImpl());
     usersLocalDataSource = locator<UsersLocalDataSource>();
 
-    usersBox = MockBox<UserH>();
+    usersBox = MockBox();
+  });
+
+  tearDown(() {
+    // Reset the registered services after each test
+    locator.reset();
   });
 
   void setupHiveDirectoryWithClosedBox() {

@@ -27,22 +27,22 @@ class UserH extends HiveObject {
   final String website;
 
   UserH({
-    this.id,
-    this.name,
-    this.username,
-    this.phone,
-    this.email,
-    this.website,
+    required this.id,
+    required this.name,
+    required this.username,
+    required this.phone,
+    required this.email,
+    required this.website,
   });
 
   factory UserH.fromUser(User user) {
     return UserH(
       id: user.id,
-      name: user.name,
+      name: user.name ?? '',
       username: user.username,
-      phone: user.phone,
+      phone: user.phone ?? '',
       email: user.email,
-      website: user.website,
+      website: user.website ?? '',
     );
   }
 

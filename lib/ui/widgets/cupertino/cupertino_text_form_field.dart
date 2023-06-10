@@ -77,61 +77,61 @@ class CupertinoTextFormField extends FormField<String> {
   /// For documentation about the various parameters, see the [CupertinoTextField] class
   /// and [new CupertinoTextField], the constructor.
   CupertinoTextFormField({
-    Key key,
+    Key? key,
     this.controller,
-    String initialValue,
-    FocusNode focusNode,
+    String? initialValue,
+    FocusNode? focusNode,
     BoxDecoration decoration = const BoxDecoration(),
-    TextInputType keyboardType,
+    TextInputType? keyboardType,
     TextCapitalization textCapitalization = TextCapitalization.none,
-    TextInputAction textInputAction,
-    TextStyle style,
-    StrutStyle strutStyle,
-    TextDirection textDirection,
+    TextInputAction? textInputAction,
+    TextStyle? style,
+    StrutStyle? strutStyle,
+    TextDirection? textDirection,
     TextAlign textAlign = TextAlign.start,
-    TextAlignVertical textAlignVertical,
+    TextAlignVertical? textAlignVertical,
     bool autofocus = false,
     bool readOnly = false,
-    ToolbarOptions toolbarOptions,
-    bool showCursor,
+    ToolbarOptions? toolbarOptions,
+    bool showCursor = false,
     bool obscureText = false,
     bool autocorrect = true,
     bool enableSuggestions = true,
     bool autovalidate = false,
     bool maxLengthEnforced = true,
     int maxLines = 1,
-    int minLines,
+    int minLines = 1,
     bool expands = false,
-    int maxLength,
-    ValueChanged<String> onChanged,
-    GestureTapCallback onTap,
-    VoidCallback onEditingComplete,
-    ValueChanged<String> onFieldSubmitted,
-    FormFieldSetter<String> onSaved,
-    FormFieldValidator<String> validator,
-    List<TextInputFormatter> inputFormatters,
+    int maxLength = -1,
+    ValueChanged<String>? onChanged,
+    GestureTapCallback? onTap,
+    VoidCallback? onEditingComplete,
+    ValueChanged<String>? onFieldSubmitted,
+    FormFieldSetter<String>? onSaved,
+    FormFieldValidator<String>? validator,
+    List<TextInputFormatter>? inputFormatters,
     bool enabled = true,
     double cursorWidth = 2.0,
-    Radius cursorRadius,
-    Color cursorColor,
-    Brightness keyboardAppearance,
+    Radius cursorRadius = Radius.zero,
+    Color? cursorColor,
+    Brightness? keyboardAppearance,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
-    Widget suffix,
+    Widget? suffix,
     OverlayVisibilityMode suffixMode = OverlayVisibilityMode.always,
-    Widget prefix,
+    Widget? prefix,
     OverlayVisibilityMode prefixMode = OverlayVisibilityMode.always,
-    String placeholder,
+    String? placeholder,
     TextStyle placeholderStyle = const TextStyle(
       fontWeight: FontWeight.w400,
       color: CupertinoColors.placeholderText,
     ),
-    ScrollController scrollController,
-    ScrollPhysics scrollPhysics,
+    ScrollController? scrollController,
+    ScrollPhysics? scrollPhysics,
     OverlayVisibilityMode clearButtonMode = OverlayVisibilityMode.never,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
     EdgeInsetsGeometry padding = const EdgeInsets.all(6.0),
-    TextStyle errorStyle,
+    TextStyle? errorStyle,
   })  : assert(initialValue == null || controller == null),
         assert(textAlign != null),
         assert(autofocus != null),
@@ -165,7 +165,7 @@ class CupertinoTextFormField extends FormField<String> {
           validator: validator,
           enabled: enabled,
           builder: (FormFieldState<String> field) {
-            final _CupertinoTextFormFieldState state = field;
+            final _CupertinoTextFormFieldState state = field as _CupertinoTextFormFieldState;
             final effectiveDecoration = decoration ?? const BoxDecoration();
             void onChangedHandler(String value) {
               if (onChanged != null) {
@@ -191,13 +191,11 @@ class CupertinoTextFormField extends FormField<String> {
                   textAlignVertical: textAlignVertical,
                   textCapitalization: textCapitalization,
                   autofocus: autofocus,
-                  toolbarOptions: toolbarOptions,
                   readOnly: readOnly,
                   showCursor: showCursor,
                   obscureText: obscureText,
                   autocorrect: autocorrect,
                   enableSuggestions: enableSuggestions,
-                  maxLengthEnforced: maxLengthEnforced,
                   maxLines: maxLines,
                   minLines: minLines,
                   expands: expands,
@@ -228,7 +226,7 @@ class CupertinoTextFormField extends FormField<String> {
                 ),
                 if (field.hasError)
                   Text(
-                    field.errorText,
+                    field.errorText ?? '',
                     style: errorStyle ??
                         CupertinoThemeData()
                             .textTheme
@@ -244,20 +242,20 @@ class CupertinoTextFormField extends FormField<String> {
   ///
   /// If null, this widget will create its own [TextEditingController] and
   /// initialize its [TextEditingController.text] with [initialValue].
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   @override
   _CupertinoTextFormFieldState createState() => _CupertinoTextFormFieldState();
 }
 
 class _CupertinoTextFormFieldState extends FormFieldState<String> {
-  TextEditingController _controller;
+  TextEditingController? _controller;
 
-  TextEditingController get _effectiveController =>
+  TextEditingController? get _effectiveController =>
       widget.controller ?? _controller;
 
   @override
-  CupertinoTextFormField get widget => super.widget;
+  CupertinoTextFormField get widget => super.widget as CupertinoTextFormField;
 
   @override
   void initState() {
@@ -265,7 +263,7 @@ class _CupertinoTextFormFieldState extends FormFieldState<String> {
     if (widget.controller == null) {
       _controller = TextEditingController(text: widget.initialValue);
     } else {
-      widget.controller.addListener(_handleControllerChanged);
+      widget.controller?.addListener(_handleControllerChanged);
     }
   }
 
@@ -278,10 +276,10 @@ class _CupertinoTextFormFieldState extends FormFieldState<String> {
 
       if (oldWidget.controller != null && widget.controller == null) {
         _controller =
-            TextEditingController.fromValue(oldWidget.controller.value);
+            TextEditingController.fromValue(oldWidget.controller?.value);
       }
       if (widget.controller != null) {
-        setValue(widget.controller.text);
+        setValue(widget.controller?.text);
         if (oldWidget.controller == null) _controller = null;
       }
     }
@@ -297,7 +295,7 @@ class _CupertinoTextFormFieldState extends FormFieldState<String> {
   void reset() {
     super.reset();
     setState(() {
-      _effectiveController.text = widget.initialValue;
+      _effectiveController?.text = widget.initialValue ?? '';
     });
   }
 
@@ -309,8 +307,8 @@ class _CupertinoTextFormFieldState extends FormFieldState<String> {
     // notifications for changes originating from within this class -- for
     // example, the reset() method. In such cases, the FormField value will
     // already have been set.
-    if (_effectiveController.text != value) {
-      didChange(_effectiveController.text);
+    if (_effectiveController?.text != value) {
+      didChange(_effectiveController?.text);
     }
   }
 }

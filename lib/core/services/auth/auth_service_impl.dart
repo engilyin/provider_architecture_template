@@ -6,9 +6,9 @@ import 'package:provider_start/core/services/auth/auth_service.dart';
 class AuthServiceImpl implements AuthService {
   final _log = Logger('AuthServiceImpl');
 
-  User _currentUser;
+  User? _currentUser;
   @override
-  User get currentUser => _currentUser;
+  User? get currentUser => _currentUser;
 
   @override
   Future<void> signUpWithEmailPassword(

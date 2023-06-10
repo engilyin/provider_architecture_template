@@ -17,8 +17,8 @@ class FadeIn extends StatefulWidget {
   final Duration duration;
 
   const FadeIn({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.duration = const Duration(milliseconds: 500),
   })  : assert(child != null),
         super(key: key);
@@ -28,8 +28,8 @@ class FadeIn extends StatefulWidget {
 }
 
 class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {

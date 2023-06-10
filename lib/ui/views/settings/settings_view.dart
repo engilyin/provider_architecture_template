@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -7,17 +8,18 @@ import 'package:stacked/stacked.dart';
 
 /// An example settings view that uses platform adaptive widgets
 /// and builds widgets using the `provider_architecture` package,
+@RoutePage()
 class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return ViewModelBuilder<SettingsViewModel>.nonReactive(
       viewModelBuilder: () => SettingsViewModel(),
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => PlatformScaffold(
         appBar: PlatformAppBar(
-          title: Text(local.settingsViewTitle),
+          title: Text(local!.settingsViewTitle),
           cupertino: (_, __) => CupertinoNavigationBarData(
             transitionBetweenRoutes: false,
           ),
@@ -36,11 +38,11 @@ class SettingsView extends StatelessWidget {
 }
 
 class _AppSettingsListTile extends ViewModelWidget<SettingsViewModel> {
-  const _AppSettingsListTile({Key key}) : super(key: key, reactive: false);
+  const _AppSettingsListTile({Key? key}) : super(key: key, reactive: false);
 
   @override
   Widget build(BuildContext context, SettingsViewModel model) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return PlatformWidget(
       material: (_, __) => ListTile(
@@ -73,11 +75,11 @@ class _AppSettingsListTile extends ViewModelWidget<SettingsViewModel> {
 }
 
 class _NotificationsListTile extends ViewModelWidget<SettingsViewModel> {
-  const _NotificationsListTile({Key key}) : super(key: key);
+  const _NotificationsListTile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, SettingsViewModel model) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return PlatformWidget(
       material: (_, __) => ListTile(
@@ -110,11 +112,11 @@ class _NotificationsListTile extends ViewModelWidget<SettingsViewModel> {
 }
 
 class _SignOutListTile extends ViewModelWidget<SettingsViewModel> {
-  const _SignOutListTile({Key key}) : super(key: key, reactive: false);
+  const _SignOutListTile({Key? key}) : super(key: key, reactive: false);
 
   @override
   Widget build(BuildContext context, SettingsViewModel model) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return PlatformWidget(
       material: (_, __) => ListTile(
@@ -147,11 +149,11 @@ class _SignOutListTile extends ViewModelWidget<SettingsViewModel> {
 }
 
 class _ShowSnackBarListTile extends ViewModelWidget<SettingsViewModel> {
-  const _ShowSnackBarListTile({Key key}) : super(key: key, reactive: false);
+  const _ShowSnackBarListTile({Key? key}) : super(key: key, reactive: false);
 
   @override
   Widget build(BuildContext context, SettingsViewModel model) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return PlatformWidget(
       material: (_, __) => ListTile(

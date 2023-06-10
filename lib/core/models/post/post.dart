@@ -25,21 +25,21 @@ abstract class Post implements Built<Post, PostBuilder> {
   }
 
   Map<String, dynamic> toMap() {
-    return serializers.serializeWith(Post.serializer, this);
+    return serializers.serializeWith(Post.serializer, this) as Map<String, dynamic>;
   }
 
   factory Post.fromJson(String jsonString) {
     return serializers.deserializeWith(
       Post.serializer,
       json.decode(jsonString),
-    );
+    )!;
   }
 
   factory Post.fromMap(Map<String, dynamic> map) {
     return serializers.deserializeWith(
       Post.serializer,
       map,
-    );
+    )!;
   }
 
   Post._();

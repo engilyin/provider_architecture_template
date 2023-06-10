@@ -22,11 +22,10 @@ import 'package:provider_start/core/services/hardware_info/hardware_info_service
 import 'package:provider_start/core/services/hardware_info/hardware_info_service_impl.dart';
 import 'package:provider_start/core/services/key_storage/key_storage_service.dart';
 import 'package:provider_start/core/services/key_storage/key_storage_service_impl.dart';
-import 'package:provider_start/core/services/navigation/navigation_service.dart';
-import 'package:provider_start/core/services/navigation/navigation_service_impl.dart';
 import 'package:provider_start/core/services/snackbar/snack_bar_service.dart';
 import 'package:provider_start/core/services/snackbar/snack_bar_service_impl.dart';
 import 'package:provider_start/core/utils/file_helper.dart';
+import 'package:provider_start/ui/router.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -36,9 +35,6 @@ GetIt locator = GetIt.instance;
 ///   - Also sets up factor methods for view models.
 Future<void> setupLocator() async {
   // Services
-  locator.registerLazySingleton<NavigationService>(
-    () => NavigationServiceImpl(),
-  );
   locator.registerLazySingleton<HardwareInfoService>(
     () => HardwareInfoServiceImpl(),
   );
@@ -78,6 +74,8 @@ Future<void> setupLocator() async {
 
   // External
   locator.registerLazySingleton<HiveInterface>(() => Hive);
+
+  locator.registerLazySingleton<AppRouter>(() => AppRouter());
 }
 
 Future<void> _setupSharedPreferences() async {

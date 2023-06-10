@@ -13,7 +13,7 @@ final supportedLocales = supportedLocalCodes
 
 /// A callback provided by [MaterialApp] that lets you
 /// specify which locales you plan to support by returning them.
-Locale loadSupportedLocals(Locale locale, Iterable<Locale> supportedLocales) {
+Locale? loadSupportedLocals(Locale? locale, Iterable<Locale> supportedLocales) {
   if (locale == null) {
     Intl.defaultLocale = supportedLocales.first.languageCode;
     return supportedLocales.first;

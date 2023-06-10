@@ -29,9 +29,9 @@ class HttpServiceImpl implements HttpService {
           contentType: 'application/json',
         ),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       _log.severe('HttpService: Failed to GET ${e.message}');
-      throw NetworkException(e.message);
+      throw NetworkException(e.message ?? '');
     }
 
     network_utils.checkForNetworkExceptions(response);
@@ -57,9 +57,9 @@ class HttpServiceImpl implements HttpService {
           contentType: 'application/json',
         ),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       _log.severe('HttpService: Failed to POST ${e.message}');
-      throw NetworkException(e.message);
+      throw NetworkException(e.message ?? '');
     }
 
     network_utils.checkForNetworkExceptions(response);
@@ -100,9 +100,9 @@ class HttpServiceImpl implements HttpService {
         file.path,
         onReceiveProgress: network_utils.showLoadingProgress,
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       _log.severe('HttpService: Failed to download file ${e.message}');
-      throw NetworkException(e.message);
+      throw NetworkException(e.message  ?? '');
     }
 
     network_utils.checkForNetworkExceptions(response);
@@ -112,7 +112,6 @@ class HttpServiceImpl implements HttpService {
 
   @override
   void dispose() {
-    _dio.clear();
     _dio.close(force: true);
   }
 }

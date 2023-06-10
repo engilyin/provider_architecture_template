@@ -9,8 +9,7 @@ abstract class ConfirmSnackBarRequest extends SnackBarRequest
 
   String get buttonText;
 
-  @nullable
-  void Function() get onPressed;
+  void Function()? get onPressed;
 
   ConfirmSnackBarRequest._();
   factory ConfirmSnackBarRequest(

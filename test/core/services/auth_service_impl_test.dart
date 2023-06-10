@@ -9,7 +9,7 @@ import '../../data/mocks.dart';
 class MockAuthService extends Mock implements AuthService {}
 
 void main() {
-  AuthService authService;
+  late AuthService authService;
 
   setUp(() {
     locator.allowReassignment = true;
@@ -30,7 +30,7 @@ void main() {
       );
 
       // assert
-      expect(authService.currentUser.id, equals(mockUser.id));
+      expect(authService.currentUser!.id, equals(mockUser.id));
     });
   });
 
@@ -45,7 +45,7 @@ void main() {
       );
 
       // assert
-      expect(authService.currentUser.id, equals(mockUser.id));
+      expect(authService.currentUser!.id, equals(mockUser.id));
     });
   });
 

@@ -8,7 +8,7 @@ import 'package:provider_start/locator.dart';
 class LifeCycleManager extends StatefulWidget {
   final Widget child;
 
-  const LifeCycleManager({Key key, this.child}) : super(key: key);
+  const LifeCycleManager({Key? key, required this.child}) : super(key: key);
 
   @override
   _LifeCycleManagerState createState() => _LifeCycleManagerState();

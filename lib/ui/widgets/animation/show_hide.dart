@@ -21,10 +21,10 @@ class ShowHide extends StatefulWidget {
   final Duration duration;
 
   ShowHide({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.duration = const Duration(milliseconds: 200),
-    @required this.showing,
+    required this.showing,
   })  : assert(child != null),
         super(key: key);
 
@@ -34,8 +34,8 @@ class ShowHide extends StatefulWidget {
 
 class _ShowHideState extends State<ShowHide>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {

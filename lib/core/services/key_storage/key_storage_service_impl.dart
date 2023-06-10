@@ -9,15 +9,15 @@ class KeyStorageServiceImpl implements KeyStorageService {
 
   static const notifications_key = 'notifications_key';
 
-  static KeyStorageServiceImpl _instance;
-  static SharedPreferences _preferences;
+  static KeyStorageServiceImpl? _instance;
+  static SharedPreferences? _preferences;
 
   static Future<KeyStorageServiceImpl> getInstance() async {
     _instance ??= KeyStorageServiceImpl();
 
     _preferences ??= await SharedPreferences.getInstance();
 
-    return _instance;
+    return _instance!;
   }
 
   @override
@@ -27,7 +27,7 @@ class KeyStorageServiceImpl implements KeyStorageService {
       _saveToDisk(notifications_key, value);
 
   dynamic _getFromDisk(String key) {
-    final value = _preferences.get(key);
+    final value = _preferences!.get(key);
 
     _log.finest('LocalStorageService: (Fetching) key: $key value: $value');
 
@@ -38,19 +38,19 @@ class KeyStorageServiceImpl implements KeyStorageService {
     _log.finest('LocalStorageService: (Saving) key: $key value: $content');
 
     if (content is String) {
-      _preferences.setString(key, content);
+      _preferences!.setString(key, content);
     }
     if (content is bool) {
-      _preferences.setBool(key, content);
+      _preferences!.setBool(key, content);
     }
     if (content is int) {
-      _preferences.setInt(key, content);
+      _preferences!.setInt(key, content);
     }
     if (content is double) {
-      _preferences.setDouble(key, content);
+      _preferences!.setDouble(key, content);
     }
     if (content is List<String>) {
-      _preferences.setStringList(key, content);
+      _preferences!.setStringList(key, content);
     }
   }
 }

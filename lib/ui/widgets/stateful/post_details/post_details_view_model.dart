@@ -10,7 +10,7 @@ class PostDetailsViewModel extends BaseViewModel {
   final _usersRepository = locator<UsersRepository>();
   final _log = Logger('HomeViewModel');
 
-  User _user;
+  late User _user;
   User get user => _user;
 
   bool _errorFetchingUser = false;

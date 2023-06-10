@@ -1,7 +1,7 @@
 import 'package:provider_start/core/models/user/user.dart';
 
 abstract class AuthService {
-  User get currentUser;
+  User? get currentUser;
 
   Future<void> signUpWithEmailPassword(
     String email,

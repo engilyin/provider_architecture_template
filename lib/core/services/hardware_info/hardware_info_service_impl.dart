@@ -8,18 +8,18 @@ import 'package:provider_start/core/services/hardware_info/hardware_info_service
 class HardwareInfoServiceImpl implements HardwareInfoService {
   final _log = Logger('HardwareInfoServiceImpl');
 
-  String _operatingSystem;
-  String _device;
-  String _udid;
+  String? _operatingSystem;
+  String? _device;
+  String? _udid;
 
   @override
-  String get operatingSystem => _operatingSystem;
+  String get operatingSystem => _operatingSystem ?? '';
 
   @override
-  String get device => _device;
+  String get device => _device ?? '';
 
   @override
-  String get udid => _udid;
+  String get udid => _udid ?? '';
 
   @override
   Future<void> init() async {

@@ -6,9 +6,9 @@ class BounceGesture extends StatefulWidget {
   final Duration duration;
 
   BounceGesture({
-    Key key,
-    @required this.child,
-    @required this.onPressed,
+    Key? key,
+    required this.child,
+    required this.onPressed,
     this.duration = const Duration(milliseconds: 200),
   })  : assert(child != null),
         super(key: key);
@@ -19,7 +19,7 @@ class BounceGesture extends StatefulWidget {
 
 class _BounceGestureState extends State<BounceGesture>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _BounceGestureState extends State<BounceGesture>
     return AnimatedBuilder(
       animation: _controller,
       child: widget.child,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return GestureDetector(
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,

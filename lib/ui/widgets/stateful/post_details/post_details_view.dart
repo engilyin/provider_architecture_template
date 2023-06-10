@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -7,10 +8,11 @@ import 'package:provider_start/ui/widgets/stateful/post_details/post_details_vie
 import 'package:provider_start/ui/widgets/stateless/loading_animation.dart';
 import 'package:stacked/stacked.dart';
 
+@RoutePage()
 class PostDetailsView extends StatelessWidget {
   final Post post;
 
-  const PostDetailsView({Key key, @required this.post})
+  const PostDetailsView({Key? key, required this.post})
       : assert(post != null),
         super(key: key);
 
@@ -68,9 +70,9 @@ class _UserDetails extends ViewModelWidget<PostDetailsViewModel> {
         children: <Widget>[
           Text(model.user.username),
           UIHelper.verticalSpaceMedium(),
-          Text(model.user.name),
+          Text(model.user.name ?? ''),
           UIHelper.verticalSpaceMedium(),
-          Text(model.user.website),
+          Text(model.user.website ?? ''),
         ],
       ),
       cupertino: (_, __) {
@@ -85,12 +87,12 @@ class _UserDetails extends ViewModelWidget<PostDetailsViewModel> {
             ),
             UIHelper.verticalSpaceMedium(),
             Text(
-              model.user.name,
+              model.user.name ?? '',
               style: style,
             ),
             UIHelper.verticalSpaceMedium(),
             Text(
-              model.user.website,
+              model.user.website ?? '',
               style: style,
             ),
           ],

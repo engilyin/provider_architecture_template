@@ -21,10 +21,10 @@ class PostH extends HiveObject {
   final int userId;
 
   PostH({
-    this.id,
-    this.title,
-    this.description,
-    this.userId,
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.userId,
   });
 
   factory PostH.fromPost(Post post) {

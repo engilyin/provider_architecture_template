@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider_start/core/exceptions/repository_exception.dart';
 import 'package:provider_start/core/repositories/posts_repository/posts_repository.dart';
@@ -7,11 +8,12 @@ import 'package:provider_start/ui/views/home/home_view_model.dart';
 
 import '../../../data/mocks.dart';
 
-class MockPostsRepository extends Mock implements PostsRepository {}
+@GenerateNiceMocks([MockSpec<PostsRepository>()])
+import 'home_view_model_test.mocks.dart';
 
 void main() {
-  PostsRepository postsRepository;
-  HomeViewModel homeViewModel;
+  late PostsRepository postsRepository;
+  late HomeViewModel homeViewModel;
 
   setUp(() {
     locator.allowReassignment = true;

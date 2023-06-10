@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -12,6 +13,7 @@ import 'package:stacked/stacked.dart';
 /// Main view container that handles rendering pages according to which bottom
 /// navigation bar item is tapped
 ///   - can be replaced with a [TabView]
+@RoutePage()
 class MainView extends StatelessWidget {
   final _views = <Widget>[
     FadeIn(child: HomeView()),
@@ -20,7 +22,7 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
@@ -39,7 +41,7 @@ class MainView extends StatelessWidget {
                 material: (_, __) => Icon(Icons.home),
                 cupertino: (_, __) => Icon(CupertinoIcons.home),
               ),
-              label: local.homeViewTitle,
+              label: local!.homeViewTitle,
             ),
             BottomNavigationBarItem(
               icon: PlatformWidget(

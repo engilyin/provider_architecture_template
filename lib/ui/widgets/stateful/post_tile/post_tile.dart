@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 class PostTile extends StatelessWidget {
   final Post post;
 
-  const PostTile({Key key, @required this.post})
+  const PostTile({Key? key, required this.post})
       : assert(post != null),
         super(key: key);
 

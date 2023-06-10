@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider_start/core/constant/api_routes.dart';
 import 'package:provider_start/core/data_sources/users/users_remote_data_source.dart';
@@ -8,11 +9,12 @@ import 'package:provider_start/locator.dart';
 
 import '../../../data/mocks.dart';
 
-class MockHttpService extends Mock implements HttpService {}
+@GenerateNiceMocks([MockSpec<HttpService>()])
+import 'users_remote_data_source_test.mocks.dart';
 
 void main() {
-  UsersRemoteDataSource usersRemoteDataSource;
-  HttpService httpService;
+  late UsersRemoteDataSource usersRemoteDataSource;
+  late HttpService httpService;
 
   setUp(() {
     locator.allowReassignment = true;
@@ -23,6 +25,11 @@ void main() {
     locator
         .registerSingleton<UsersRemoteDataSource>(UsersRemoteDataSourceImpl());
     usersRemoteDataSource = locator<UsersRemoteDataSource>();
+  });
+
+  tearDown(() {
+    // Reset the registered services after each test
+    locator.reset();
   });
 
   test('should call httpService.getHttp with correct uid when we fetch user',

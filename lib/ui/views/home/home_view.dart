@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider_start/core/localization/localization.dart';
@@ -6,10 +7,11 @@ import 'package:provider_start/ui/widgets/stateful/post_tile/post_tile.dart';
 import 'package:provider_start/ui/widgets/stateless/loading_animation.dart';
 import 'package:stacked/stacked.dart';
 
+@RoutePage()
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
@@ -56,7 +58,7 @@ class _LoadingAnimation extends StatelessWidget {
 class _NoPosts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return Center(
       child: Text(local.homeViewNoPosts),

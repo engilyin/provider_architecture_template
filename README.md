@@ -17,10 +17,15 @@ Filled Stacks Links:
 
 ## Setup
 
-Generate your platform specific folders with kotlin/swift
+Create the generated sources
+```bash
+flutter packages pub run build_runner build --delete-conflicting-outputs
+```
+
+Generate your platform specific folders with java/swift
 
 ```bash
-flutter create .
+flutter create -i swift -a java .
 ```
 
 or generate your platform specific folders with objc/java
@@ -43,7 +48,8 @@ Since this project uses 3 locales add this to your info.plist
 Generate the launcher icon (optional)
 
 ```bash
-flutter pub get && pub run flutter_launcher_icons:main
+flutter pub get 
+flutter pub run flutter_launcher_icons:main
 ```
 
 ## Folder structure
@@ -98,11 +104,6 @@ flutter pub get && pub run flutter_launcher_icons:main
 - [x] view model tests
 - [ ] widget tests
 - [ ] responsive views
-
-### Geolocator branch
-
-- [x] location service
-- [x] location permission service
 
 ## Example pages included
 
@@ -163,3 +164,13 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 - Add your own custom getter values.
 - Add `<YOUR_MODEL>` to the list in `@SerializersFor` class constructor found under `core/models/serializer.dart`
 - Run `flutter packages pub run build_runner build --delete-conflicting-outputs` to build your new model
+
+### Fork updates
+
+- Migrated to SDK 3.0.0+. Mostly null-safety changes
+- Dependencies updated to the latest versions
+- The `Auto_Route` has been updated to the new style. See: [Migrating to v6](https://github.com/Milad-Akarie/auto_route_library#migrating-to-v6)
+- Mockito generated mocks to resolve null-safety issue (NOTE: as an alternative it could be replaced with `mocktail`). See: [Null Safety](https://github.com/dart-lang/mockito/blob/master/NULL_SAFETY_README.md)
+- Removed generated code from the repo
+- Removed `NavigationService` in favor to direct calls of `AppRouter`
+- `Validators` becomes separate utility class with set of static methods
